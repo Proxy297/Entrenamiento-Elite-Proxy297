@@ -44,7 +44,7 @@ const SkillsView = () => {
     };
 
     return (
-        <div className="space-y-6 pb-20 animate-in fade-in duration-500">
+        <div className="space-y-6 pb-20">
             <header className="mb-6">
                 <h2 className="text-2xl font-heading font-black text-white italic uppercase tracking-wider">Skills <span className="text-blue-600">Eval</span></h2>
                 <p className="text-xs text-neutral-400 font-bold uppercase tracking-widest">Performance Metrics</p>
@@ -60,7 +60,7 @@ const SkillsView = () => {
                     <button
                         key={tab.id}
                         onClick={() => setActiveTab(tab.id as any)}
-                        className={`flex-1 flex flex-col items-center gap-1 py-3 rounded-lg text-xs font-bold uppercase transition-all duration-300 ${activeTab === tab.id
+                        className={`flex-1 flex flex-col items-center gap-1 py-3 rounded-lg text-xs font-bold uppercase ${activeTab === tab.id
                             ? 'bg-blue-600 text-white shadow-lg shadow-blue-900/40'
                             : 'text-neutral-500 hover:text-white hover:bg-white/5'
                             }`}
@@ -79,7 +79,7 @@ const SkillsView = () => {
 
                     {/* Dynamic Slider based on Tab - Fixed with key for reconciliation */}
                     {/* STRIKING SECTION */}
-                    <div className={activeTab === 'striking' ? 'space-y-4 animate-in fade-in' : 'hidden'}>
+                    <div className={activeTab === 'striking' ? 'space-y-4' : 'hidden'}>
                         <div className="flex justify-between items-center text-white">
                             <span className="font-bold uppercase tracking-wider text-sm">Accuracy & Output</span>
                             <span className="font-heading font-black text-2xl text-blue-500">
@@ -87,6 +87,7 @@ const SkillsView = () => {
                             </span>
                         </div>
                         <input
+                            id="slider-striking"
                             type="range" min="0" max="100"
                             value={scores.striking_accuracy}
                             onChange={(e) => setScores({ ...scores, striking_accuracy: parseInt(e.target.value) })}
@@ -98,7 +99,7 @@ const SkillsView = () => {
                     </div>
 
                     {/* GRAPPLING SECTION */}
-                    <div className={activeTab === 'grappling' ? 'space-y-4 animate-in fade-in' : 'hidden'}>
+                    <div className={activeTab === 'grappling' ? 'space-y-4' : 'hidden'}>
                         <div className="flex justify-between items-center text-white">
                             <span className="font-bold uppercase tracking-wider text-sm">Control Time</span>
                             <span className="font-heading font-black text-2xl text-blue-500">
@@ -106,6 +107,7 @@ const SkillsView = () => {
                             </span>
                         </div>
                         <input
+                            id="slider-grappling"
                             type="range" min="0" max="100"
                             value={scores.grappling_control}
                             onChange={(e) => setScores({ ...scores, grappling_control: parseInt(e.target.value) })}
@@ -117,7 +119,7 @@ const SkillsView = () => {
                     </div>
 
                     {/* BJJ SECTION */}
-                    <div className={activeTab === 'bjj' ? 'space-y-4 animate-in fade-in' : 'hidden'}>
+                    <div className={activeTab === 'bjj' ? 'space-y-4' : 'hidden'}>
                         <div className="flex justify-between items-center text-white">
                             <span className="font-bold uppercase tracking-wider text-sm">Submission Efficiency</span>
                             <span className="font-heading font-black text-2xl text-blue-500">
@@ -125,6 +127,7 @@ const SkillsView = () => {
                             </span>
                         </div>
                         <input
+                            id="slider-bjj"
                             type="range" min="0" max="100"
                             value={scores.bjj_submission_rate}
                             onChange={(e) => setScores({ ...scores, bjj_submission_rate: parseInt(e.target.value) })}
