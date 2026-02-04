@@ -18,16 +18,10 @@ const SkillsView = () => {
         notes: ''
     });
 
-    const getActiveScore = () => {
-        switch (activeTab) {
-            case 'striking': return scores.striking_accuracy;
-            case 'grappling': return scores.grappling_control;
-            case 'bjj': return scores.bjj_submission_rate;
-            default: return 0;
-        }
-    };
+    // Helper variables removed as we bind directly in JSX for stability
 
-    const activeScore = getActiveScore();
+
+
     const handleSave = async () => {
         if (!user) return;
         setLoading(true);
@@ -84,33 +78,60 @@ const SkillsView = () => {
                 <CardContent className="p-6 space-y-8 relative z-10">
 
                     {/* Dynamic Slider based on Tab - Fixed with key for reconciliation */}
-                    <div className="space-y-4" key={activeTab}>
+                    {/* STRIKING SECTION */}
+                    <div className={activeTab === 'striking' ? 'space-y-4 animate-in fade-in' : 'hidden'}>
                         <div className="flex justify-between items-center text-white">
-                            <span className="font-bold uppercase tracking-wider text-sm">
-                                {activeTab === 'striking' && 'Accuracy & Output'}
-                                {activeTab === 'grappling' && 'Control Time'}
-                                {activeTab === 'bjj' && 'Submission Efficiency'}
-                            </span>
+                            <span className="font-bold uppercase tracking-wider text-sm">Accuracy & Output</span>
                             <span className="font-heading font-black text-2xl text-blue-500">
-                                {activeScore}
-                                <span className="text-sm text-neutral-500">%</span>
+                                {scores.striking_accuracy}<span className="text-sm text-neutral-500">%</span>
                             </span>
                         </div>
-
                         <input
-                            type="range"
-                            min="0"
-                            max="100"
-                            value={activeScore}
-                            onChange={(e) => setScores({
-                                ...scores,
-                                [activeTab === 'striking' ? 'striking_accuracy' : activeTab === 'grappling' ? 'grappling_control' : 'bjj_submission_rate']: parseInt(e.target.value)
-                            })}
+                            type="range" min="0" max="100"
+                            value={scores.striking_accuracy}
+                            onChange={(e) => setScores({ ...scores, striking_accuracy: parseInt(e.target.value) })}
                             className="w-full h-2 bg-neutral-800 rounded-lg appearance-none cursor-pointer accent-blue-600 hover:accent-blue-500"
                         />
                         <div className="flex justify-between text-[10px] text-neutral-500 font-bold uppercase">
-                            <span>Poor</span>
-                            <span>Elite</span>
+                            <span>Poor</span><span>Elite</span>
+                        </div>
+                    </div>
+
+                    {/* GRAPPLING SECTION */}
+                    <div className={activeTab === 'grappling' ? 'space-y-4 animate-in fade-in' : 'hidden'}>
+                        <div className="flex justify-between items-center text-white">
+                            <span className="font-bold uppercase tracking-wider text-sm">Control Time</span>
+                            <span className="font-heading font-black text-2xl text-blue-500">
+                                {scores.grappling_control}<span className="text-sm text-neutral-500">%</span>
+                            </span>
+                        </div>
+                        <input
+                            type="range" min="0" max="100"
+                            value={scores.grappling_control}
+                            onChange={(e) => setScores({ ...scores, grappling_control: parseInt(e.target.value) })}
+                            className="w-full h-2 bg-neutral-800 rounded-lg appearance-none cursor-pointer accent-blue-600 hover:accent-blue-500"
+                        />
+                        <div className="flex justify-between text-[10px] text-neutral-500 font-bold uppercase">
+                            <span>Poor</span><span>Elite</span>
+                        </div>
+                    </div>
+
+                    {/* BJJ SECTION */}
+                    <div className={activeTab === 'bjj' ? 'space-y-4 animate-in fade-in' : 'hidden'}>
+                        <div className="flex justify-between items-center text-white">
+                            <span className="font-bold uppercase tracking-wider text-sm">Submission Efficiency</span>
+                            <span className="font-heading font-black text-2xl text-blue-500">
+                                {scores.bjj_submission_rate}<span className="text-sm text-neutral-500">%</span>
+                            </span>
+                        </div>
+                        <input
+                            type="range" min="0" max="100"
+                            value={scores.bjj_submission_rate}
+                            onChange={(e) => setScores({ ...scores, bjj_submission_rate: parseInt(e.target.value) })}
+                            className="w-full h-2 bg-neutral-800 rounded-lg appearance-none cursor-pointer accent-blue-600 hover:accent-blue-500"
+                        />
+                        <div className="flex justify-between text-[10px] text-neutral-500 font-bold uppercase">
+                            <span>Poor</span><span>Elite</span>
                         </div>
                     </div>
 

@@ -9,6 +9,8 @@ interface SessionTimerProps {
 }
 
 const SessionTimer = ({ exerciseName, onClose }: SessionTimerProps) => {
+    if (!exerciseName) return null; // Safety check
+
     const [timeLeft, setTimeLeft] = useState(180); // Default 3 mins
     const [isActive, setIsActive] = useState(false);
     const [isResting, setIsResting] = useState(false);
