@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Play, Pause, RefreshCw, X } from 'lucide-react';
 import { Button } from '../../components/ui/button';
 import { Card } from '../../components/ui/card';
@@ -10,6 +10,12 @@ interface SessionTimerProps {
 
 const SessionTimer = ({ exerciseName, onClose }: SessionTimerProps) => {
     if (!exerciseName) return null; // Safety check
+
+    // Mounted Check Pattern
+    const isMounted = useRef(true);
+    useEffect(() => {
+        return () => { isMounted.current = false; };
+    }, []);
 
     const [timeLeft, setTimeLeft] = useState(180); // Default 3 mins
     const [isActive, setIsActive] = useState(false);
@@ -26,7 +32,9 @@ const SessionTimer = ({ exerciseName, onClose }: SessionTimerProps) => {
 
         if (isActive && timeLeft > 0) {
             interval = setInterval(() => {
-                setTimeLeft((prev) => prev - 1);
+                if (isMounted.current) {
+                    setTimeLeft((prev) => prev - 1);
+                }
             }, 1000);
         }
 
@@ -69,7 +77,7 @@ const SessionTimer = ({ exerciseName, onClose }: SessionTimerProps) => {
     };
 
     return (
-        <div id="session-timer-container" className="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm flex items-center justify-center p-4">
+        <div id="session-timer-container" className="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm flex items-center justify-center p-4" suppressHydrationWarning={true}>
             <Card className="w-full max-w-sm bg-neutral-900 border-blue-900/50 relative overflow-hidden">
                 <div className="p-6 flex flex-col items-center gap-6">
                     {/* Heder */}
