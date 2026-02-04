@@ -18,6 +18,16 @@ const SkillsView = () => {
         notes: ''
     });
 
+    const getActiveScore = () => {
+        switch (activeTab) {
+            case 'striking': return scores.striking_accuracy;
+            case 'grappling': return scores.grappling_control;
+            case 'bjj': return scores.bjj_submission_rate;
+            default: return 0;
+        }
+    };
+
+    const activeScore = getActiveScore();
     const handleSave = async () => {
         if (!user) return;
         setLoading(true);
@@ -82,9 +92,7 @@ const SkillsView = () => {
                                 {activeTab === 'bjj' && 'Submission Efficiency'}
                             </span>
                             <span className="font-heading font-black text-2xl text-blue-500">
-                                {activeTab === 'striking' && scores?.striking_accuracy}
-                                {activeTab === 'grappling' && scores?.grappling_control}
-                                {activeTab === 'bjj' && scores?.bjj_submission_rate}
+                                {activeScore}
                                 <span className="text-sm text-neutral-500">%</span>
                             </span>
                         </div>
@@ -93,11 +101,7 @@ const SkillsView = () => {
                             type="range"
                             min="0"
                             max="100"
-                            value={
-                                activeTab === 'striking' ? scores?.striking_accuracy :
-                                    activeTab === 'grappling' ? scores?.grappling_control :
-                                        scores?.bjj_submission_rate
-                            }
+                            value={activeScore}
                             onChange={(e) => setScores({
                                 ...scores,
                                 [activeTab === 'striking' ? 'striking_accuracy' : activeTab === 'grappling' ? 'grappling_control' : 'bjj_submission_rate']: parseInt(e.target.value)

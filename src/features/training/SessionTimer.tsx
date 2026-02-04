@@ -18,25 +18,39 @@ const SessionTimer = ({ exerciseName, onClose }: SessionTimerProps) => {
     const [workTime, setWorkTime] = useState(180);
     const [restTime, setRestTime] = useState(60);
 
+    // Timer Tick Effect
     useEffect(() => {
         let interval: any = null;
+
         if (isActive && timeLeft > 0) {
             interval = setInterval(() => {
-                setTimeLeft(timeLeft - 1);
+                setTimeLeft((prev) => prev - 1);
             }, 1000);
-        } else if (timeLeft === 0) {
-            // Timer finished
+        }
+
+        return () => clearInterval(interval);
+    }, [isActive, timeLeft]); // timeLeft is needed here to stop interval at 0
+
+    // Round Transition Effect
+    useEffect(() => {
+        if (timeLeft === 0 && isActive) {
             if (isResting) {
+                // End of Rest -> Start Work
                 setIsResting(false);
                 setTimeLeft(workTime);
                 setRound(r => r + 1);
             } else {
+                // End of Work -> Start Rest
                 setIsResting(true);
                 setTimeLeft(restTime);
             }
         }
-        return () => clearInterval(interval);
-    }, [isActive, timeLeft, isResting, workTime, restTime]);
+    }, [timeLeft, isActive, isResting, workTime, restTime]);
+
+    /* 
+       BETTER APPROACH for Timer Stability:
+       Split the 'tick' from the 'time check'. 
+    */
 
     const formatTime = (seconds: number) => {
         const mins = Math.floor(seconds / 60);
