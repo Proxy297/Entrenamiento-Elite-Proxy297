@@ -57,8 +57,8 @@ const SkillsView = () => {
                         key={tab.id}
                         onClick={() => setActiveTab(tab.id as any)}
                         className={`flex-1 flex flex-col items-center gap-1 py-3 rounded-lg text-xs font-bold uppercase transition-all duration-300 ${activeTab === tab.id
-                                ? 'bg-blue-600 text-white shadow-lg shadow-blue-900/40'
-                                : 'text-neutral-500 hover:text-white hover:bg-white/5'
+                            ? 'bg-blue-600 text-white shadow-lg shadow-blue-900/40'
+                            : 'text-neutral-500 hover:text-white hover:bg-white/5'
                             }`}
                     >
                         <tab.icon className="h-5 w-5" />
@@ -73,8 +73,8 @@ const SkillsView = () => {
 
                 <CardContent className="p-6 space-y-8 relative z-10">
 
-                    {/* Dynamic Slider based on Tab */}
-                    <div className="space-y-4">
+                    {/* Dynamic Slider based on Tab - Fixed with key for reconciliation */}
+                    <div className="space-y-4" key={activeTab}>
                         <div className="flex justify-between items-center text-white">
                             <span className="font-bold uppercase tracking-wider text-sm">
                                 {activeTab === 'striking' && 'Accuracy & Output'}
@@ -82,9 +82,9 @@ const SkillsView = () => {
                                 {activeTab === 'bjj' && 'Submission Efficiency'}
                             </span>
                             <span className="font-heading font-black text-2xl text-blue-500">
-                                {activeTab === 'striking' && scores.striking_accuracy}
-                                {activeTab === 'grappling' && scores.grappling_control}
-                                {activeTab === 'bjj' && scores.bjj_submission_rate}
+                                {activeTab === 'striking' && scores?.striking_accuracy}
+                                {activeTab === 'grappling' && scores?.grappling_control}
+                                {activeTab === 'bjj' && scores?.bjj_submission_rate}
                                 <span className="text-sm text-neutral-500">%</span>
                             </span>
                         </div>
@@ -94,9 +94,9 @@ const SkillsView = () => {
                             min="0"
                             max="100"
                             value={
-                                activeTab === 'striking' ? scores.striking_accuracy :
-                                    activeTab === 'grappling' ? scores.grappling_control :
-                                        scores.bjj_submission_rate
+                                activeTab === 'striking' ? scores?.striking_accuracy :
+                                    activeTab === 'grappling' ? scores?.grappling_control :
+                                        scores?.bjj_submission_rate
                             }
                             onChange={(e) => setScores({
                                 ...scores,
