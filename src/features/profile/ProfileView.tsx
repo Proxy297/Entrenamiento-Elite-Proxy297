@@ -1,9 +1,24 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../context/AuthContext';
 import { Button } from '../../components/ui/button';
 import { Card, CardContent } from '../../components/ui/card';
 import { Swords, HandMetal, PersonStanding, Save, Activity } from 'lucide-react';
+
+const MemoizedSlider = React.memo(({ id, value, onChange, className }: { id: string, value: number, onChange: (e: React.ChangeEvent<HTMLInputElement>) => void, className: string }) => {
+    return (
+        <input
+            id={id}
+            type="range"
+            min="0"
+            max="100"
+            value={value}
+            onChange={onChange}
+            className={className}
+        />
+    );
+});
+
 
 const SkillsView = () => {
     const { user } = useAuth();
@@ -86,11 +101,10 @@ const SkillsView = () => {
                                 {scores.striking_accuracy}<span className="text-sm text-neutral-500">%</span>
                             </span>
                         </div>
-                        <input
+                        <MemoizedSlider
                             id="slider-striking"
-                            type="range" min="0" max="100"
                             value={scores.striking_accuracy}
-                            onChange={(e) => setScores({ ...scores, striking_accuracy: parseInt(e.target.value) })}
+                            onChange={(e) => setScores(prev => ({ ...prev, striking_accuracy: parseInt(e.target.value) }))}
                             className="w-full h-2 bg-neutral-800 rounded-lg appearance-none cursor-pointer accent-blue-600 hover:accent-blue-500"
                         />
                         <div className="flex justify-between text-[10px] text-neutral-500 font-bold uppercase">
@@ -106,11 +120,10 @@ const SkillsView = () => {
                                 {scores.grappling_control}<span className="text-sm text-neutral-500">%</span>
                             </span>
                         </div>
-                        <input
+                        <MemoizedSlider
                             id="slider-grappling"
-                            type="range" min="0" max="100"
                             value={scores.grappling_control}
-                            onChange={(e) => setScores({ ...scores, grappling_control: parseInt(e.target.value) })}
+                            onChange={(e) => setScores(prev => ({ ...prev, grappling_control: parseInt(e.target.value) }))}
                             className="w-full h-2 bg-neutral-800 rounded-lg appearance-none cursor-pointer accent-blue-600 hover:accent-blue-500"
                         />
                         <div className="flex justify-between text-[10px] text-neutral-500 font-bold uppercase">
@@ -126,11 +139,10 @@ const SkillsView = () => {
                                 {scores.bjj_submission_rate}<span className="text-sm text-neutral-500">%</span>
                             </span>
                         </div>
-                        <input
+                        <MemoizedSlider
                             id="slider-bjj"
-                            type="range" min="0" max="100"
                             value={scores.bjj_submission_rate}
-                            onChange={(e) => setScores({ ...scores, bjj_submission_rate: parseInt(e.target.value) })}
+                            onChange={(e) => setScores(prev => ({ ...prev, bjj_submission_rate: parseInt(e.target.value) }))}
                             className="w-full h-2 bg-neutral-800 rounded-lg appearance-none cursor-pointer accent-blue-600 hover:accent-blue-500"
                         />
                         <div className="flex justify-between text-[10px] text-neutral-500 font-bold uppercase">

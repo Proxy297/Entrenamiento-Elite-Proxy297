@@ -11,7 +11,10 @@ interface Exercise {
     category: string;
 }
 
+import { useNavigate } from 'react-router-dom';
+
 const TrainingView = () => {
+    const navigate = useNavigate();
     const [exercises, setExercises] = useState<Exercise[]>([]);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
@@ -28,13 +31,20 @@ const TrainingView = () => {
     }, []);
 
     const fetchExercises = async () => {
-        const { data } = await supabase
-            .from('exercises')
-            .select('*')
-            .order('name');
+        try {
+            const { data, error } = await supabase
+                .from('exercises')
+                .select('*')
+                .order('name');
 
-        if (data) setExercises(data);
-        setLoading(false);
+            if (error) throw error;
+            if (data) setExercises(data);
+        } catch (err) {
+            console.error("Critical Training Error:", err);
+            navigate('/'); // Fail safe redirect
+        } finally {
+            setLoading(false);
+        }
     };
 
     const handleCreateExercise = async () => {
@@ -138,9 +148,9 @@ const TrainingView = () => {
                         >
                             <div className="flex items-center gap-4">
                                 <div className={`h-10 w-10 rounded-full flex items-center justify-center ${exercise.category === 'Striking' ? 'bg-red-500/10 text-red-500' :
-                                        exercise.category === 'Grappling' ? 'bg-orange-500/10 text-orange-500' :
-                                            exercise.category === 'BJJ' ? 'bg-purple-500/10 text-purple-500' :
-                                                'bg-green-500/10 text-green-500'
+                                    exercise.category === 'Grappling' ? 'bg-orange-500/10 text-orange-500' :
+                                        exercise.category === 'BJJ' ? 'bg-purple-500/10 text-purple-500' :
+                                            'bg-green-500/10 text-green-500'
                                     }`}>
                                     <Dumbbell className="h-5 w-5" />
                                 </div>
