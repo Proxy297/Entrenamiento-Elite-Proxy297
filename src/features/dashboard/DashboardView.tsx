@@ -75,7 +75,7 @@ const DashboardView = () => {
     if (loading) return <div className="p-6 text-neutral-500 animate-pulse uppercase font-bold text-xs text-center mt-20">Syncing Biometrics...</div>;
 
     return (
-        <div className="space-y-6 pb-20 animate-in fade-in duration-700">
+        <div className="space-y-6 pb-20">
 
             {/* Check In Overlay */}
             {needsCheckIn && <DailyCheckIn onComplete={loadDashboardData} />}

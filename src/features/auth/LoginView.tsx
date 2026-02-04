@@ -32,7 +32,7 @@ const LoginView = () => {
             <div className="absolute top-0 right-0 -mr-20 -mt-20 h-64 w-64 bg-blue-600/20 blur-[100px] rounded-full"></div>
             <div className="absolute bottom-0 left-0 -ml-20 -mb-20 h-64 w-64 bg-red-600/20 blur-[100px] rounded-full"></div>
 
-            <div className="z-10 w-full max-w-sm flex flex-col items-center space-y-8 animate-in fade-in zoom-in duration-700">
+            <div className="z-10 w-full max-w-sm flex flex-col items-center space-y-8">
                 {/* Logo Section */}
                 <div className="flex flex-col items-center">
                     <img src={logo} alt="Proxy297 Logo" className="h-32 w-auto object-contain drop-shadow-[0_0_25px_rgba(37,99,235,0.6)]" />

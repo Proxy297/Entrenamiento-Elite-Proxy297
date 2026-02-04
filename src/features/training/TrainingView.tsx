@@ -67,7 +67,7 @@ const TrainingView = () => {
     );
 
     return (
-        <div className="space-y-6 pb-20 animate-in fade-in duration-500 relative">
+        <div className="space-y-6 pb-20 relative">
 
             {/* Timer Overlay */}
             {activeExercise && (
@@ -93,7 +93,7 @@ const TrainingView = () => {
 
             {/* Creation Form */}
             {isCreating && (
-                <Card className="bg-neutral-900 border-blue-900/50 mb-6 animate-in slide-in-from-top-2">
+                <Card className="bg-neutral-900 border-blue-900/50 mb-6">
                     <CardContent className="p-4 space-y-4">
                         <label className="text-xs font-bold text-blue-400 uppercase">New Exercise Name</label>
                         <input
